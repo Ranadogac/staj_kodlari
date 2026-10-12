@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width , initial-scale=1.0">
+    <title>Staj Projesi - Vergi İadesi</title>
+    <style>
+        .conteyner {
+            width: 95%;
+            margin-left: 2%; 
+        }
+
+        .ana-baslik {
+            border: 2px solid black;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            background-color: blue; 
+            color: white;
+        }
+
+        .tablo {
+            display: flex;
+            width: 100%;
+        }
+
+        .tablo-blok {
+            width: 50%;
+            margin: 10px; 
+        }
+
+        .baslik-satiri {
+            display: flex;
+            background-color: rgb(66, 137, 191); 
+            color: white;
+            font-weight: bold;
+            border: 2px solid black;
+        }
+        .veri-satiri {
+            display: flex;
+            border: 2px solid black;
+            margin-top: -2px; 
+        }
+        .baslik {
+            width: 20%; 
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+        }
+        .veri {
+            width: 20%; 
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        input {
+            width: 100%;
+            padding: 2px;
+            border: 1px solid black;
+        }
+
+        select {
+            width: 100%;
+            padding: 2px;
+            border: 1px solid black;
+        }
+
+        .ozet-tablo {
+            margin-top: 40px;
+            width: 300px;
+            margin-left: 35%; 
+        }
+
+        .ozet-ana-baslik {
+            border: 2px solid blue;
+            background-color: blue; 
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .ozet-baslik-satiri {
+            display: flex;
+            background-color: rgb(66, 137, 191);
+            color: white;
+            font-weight: bold;
+            border: 2px solid black;
+        }
+
+        .ozet-veri-satiri {
+            display: flex;
+            border: 2px solid black;
+            margin-top: -2px;
+        }
+
+        .ozet-toplam-satiri {
+            display: flex;
+            font-weight: bold;
+            background-color: gray;
+            border: 2px solid black;
+            margin-top: -2px;
+        }
+
+        .ozet-sutun {
+            width: 50%;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="conteyner">
+        <div class="ana-baslik">VERGİ İADESİNE ESAS BELGENİN</div>
+        <div class="tablo">
+            <div class="tablo-blok">
+                <div class="baslik-satiri">
+                    <div class="baslik">SIRA NO</div>
+                    <div class="baslik">Tarihi</div>
+                    <div class="baslik">Kimden Alındığı</div>
+                    <div class="baslik">Fiş Türü</div>
+                    <div class="baslik">Tutarı</div>
+                </div>
+                <div id="sol-blok"></div>
+            </div>
+            <div class="tablo-blok">
+                <div class="baslik-satiri">
+                    <div class="baslik">SIRA NO</div>
+                    <div class="baslik">Tarihi</div>
+                    <div class="baslik">Kimden Alındığı</div>
+                    <div class="baslik">Fiş Türü</div>
+                    <div class="baslik">Tutarı</div>
+                </div>
+                <div id="sag-blok"></div>
+            </div>
+        </div>
+        <div class="ozet-tablo">
+            <div class="ozet-ana-baslik">HARCAMA ÖZETİ</div>
+            <div class="ozet-baslik-satiri">
+                <div class="ozet-sutun">KATEGORİ</div>
+                <div class="ozet-sutun">TOPLAM TUTAR</div>
+            </div>
+            <div class="ozet-veri-satiri">
+                <div class="ozet-sutun">Eğitim</div>
+                <div class="ozet-sutun"><span id="toplam-egitim">0.00</span> TL</div>
+            </div>
+            <div class="ozet-veri-satiri">
+                <div class="ozet-sutun">Sağlık</div>
+                <div class="ozet-sutun"><span id="toplam-saglik">0.00</span> TL</div>
+            </div>
+            <div class="ozet-veri-satiri">
+                <div class="ozet-sutun">Kira</div>
+                <div class="ozet-sutun"><span id="toplam-kira">0.00</span> TL</div>
+            </div>
+            <div class="ozet-veri-satiri">
+                <div class="ozet-sutun">Gıda</div>
+                <div class="ozet-sutun"><span id="toplam-gida">0.00</span> TL</div>
+            </div>
+            <div class="ozet-veri-satiri">
+                <div class="ozet-sutun">Akaryakıt</div>
+                <div class="ozet-sutun"><span id="toplam-akaryakit">0.00</span> TL</div>
+            </div>
+            <div class="ozet-veri-satiri">
+                <div class="ozet-sutun">Eğlence</div>
+                <div class="ozet-sutun"><span id="toplam-eglence">0.00</span> TL</div>
+            </div>
+            <div class="ozet-toplam-satiri">
+                <div class="ozet-sutun">GENEL TOPLAM</div>
+                <div class="ozet-sutun"><span id="toplam-genel">0.00</span> TL</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var solTaraf = document.getElementById('sol-blok');
+        var sagTaraf = document.getElementById('sag-blok');
+
+        for (var i = 1; i <= 86; i++) {
+            var yeniSatir = document.createElement('div');
+            yeniSatir.className = 'veri-satiri';
+            
+            var icerik = '';
+            icerik = icerik + '<div class="veri">' + i + '</div>';
+            icerik = icerik + '<div class="veri"><input type="date" id="tarih_' + i + '"></div>';
+            icerik = icerik + '<div class="veri"><input type="text" id="kimden_' + i + '" placeholder="Metin giriniz"></div>';
+            icerik = icerik + '<div class="veri"><select id="tur_' + i + '" onchange="toplamlariHesapla()"><option value="">Seçiniz</option><option value="egitim">Eğitim</option><option value="saglik">Sağlık</option><option value="kira">Kira</option><option value="gida">Gıda</option><option value="akaryakit">Akaryakıt</option><option value="eglence">Eğlence</option></select></div>';
+            icerik = icerik + '<div class="veri"><input type="number" id="tutar_' + i + '" step="0.01" placeholder="0.00" oninput="toplamlariHesapla()"></div>';
+            yeniSatir.innerHTML = icerik;
+
+            if (i <= 43) {
+                solTaraf.appendChild(yeniSatir);}
+                 else {
+                sagTaraf.appendChild(yeniSatir);}
+        }
+        function toplamlariHesapla() {
+            var genelToplam = 0;
+            var egitimToplam = 0;
+            var saglikToplam = 0;
+            var kiraToplam = 0;
+            var gidaToplam = 0;
+            var akaryakitToplam = 0;
+            var eglenceToplam = 0;
+
+            for (var k = 1; k <= 86; k++) {
+                var turSecimi = document.getElementById('tur_' + k);
+                var tutarSecimi = document.getElementById('tutar_' + k);
+
+                if (turSecimi && tutarSecimi) {
+                    var secilenTur = turSecimi.value;
+                    var girilenTutar = parseFloat(tutarSecimi.value);
+
+                    if (isNaN(girilenTutar)) {
+                        girilenTutar = 0;
+                    }
+
+                    if (girilenTutar > 0) {
+                        genelToplam = genelToplam + girilenTutar;
+                        if (secilenTur == 'egitim') {
+                            egitimToplam = egitimToplam + girilenTutar;}
+                        if (secilenTur == 'saglik') {
+                            saglikToplam = saglikToplam + girilenTutar;}
+                        if (secilenTur == 'kira') {
+                            kiraToplam = kiraToplam + girilenTutar; }
+                        if (secilenTur == 'gida') {
+                            gidaToplam = gidaToplam + girilenTutar; }
+                        if (secilenTur == 'akaryakit') {
+                            akaryakitToplam = akaryakitToplam + girilenTutar; }
+                        if (secilenTur == 'eglence') {
+                            eglenceToplam = eglenceToplam + girilenTutar;}
+                    }
+                }
+            }
+            document.getElementById('toplam-genel').innerText = genelToplam.toFixed(2);
+            document.getElementById('toplam-egitim').innerText = egitimToplam.toFixed(2);
+            document.getElementById('toplam-saglik').innerText = saglikToplam.toFixed(2);
+            document.getElementById('toplam-kira').innerText = kiraToplam.toFixed(2);
+            document.getElementById('toplam-gida').innerText = gidaToplam.toFixed(2);
+            document.getElementById('toplam-akaryakit').innerText = akaryakitToplam.toFixed(2);
+            document.getElementById('toplam-eglence').innerText = eglenceToplam.toFixed(2);
+        }
+    </script>
+</body>
+</html>
